@@ -36,6 +36,10 @@ function initialize() {
   this.createSmurf();
 };
 
+function handleMouseMove(e) {
+  mousePos = { x: e.clientX, y: e.clientY };
+};
+
 function createSmurf() {
   smurf = new Smurf();
   scene.add(smurf.face);
@@ -47,8 +51,15 @@ Smurf = function() {
   this.face = new THREE.Mesh(geometry, material);
 };
 
-function handleMouseMove(e) {
-  mousePos = { x: e.clientX, y: e.clientY };
+Smurf.prototype.look = function(xTarget, yTarget) {
+  //use 'rule 3' to get tHeadRotY and tHeadRotX
+  //(figure out how 'rule 3' actually works, ha)
+};
+
+Smurf.prototype.updateBody = function(speed) {
+  //wtf is speed?
+  //smurf.face.rotation.x += (this.tHeadRotX - this.head.rotation.x) / speed;
+  //smurf.face.rotation.y += (this.tHeadRotY - this.head.rotation.y) / speed;
 };
 
 function loop() {
@@ -56,16 +67,13 @@ function loop() {
   var xTarget = (mousePos.x - windowHalfX);
   var yTarget = (mousePos.y - windowHalfY);
 
-  smurf.face.rotation.x += xTarget;
-  smurf.face.rotation.y += yTarget;
+  // smurf.face.rotation.x += xTarget;
+  // smurf.face.rotation.y += yTarget;
 
   requestAnimationFrame(loop);
 };
 
 function render() {
-  // requestAnimationFrame(render);
-  // cube.rotation.x += 0.01;
-  // cube.rotation.y += 0.01;
   renderer.render(scene, camera);
 };
 
