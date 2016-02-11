@@ -40,6 +40,7 @@ function initialize() {
 };
 
 function createLights() {
+  // need shadows for MeshLambertMaterials
   light = new THREE.HemisphereLight(0xffffff, 0xffffff, .5)
 
   shadowLight = new THREE.DirectionalLight(0xffffff, .8);
