@@ -60,7 +60,7 @@ function handleMouseMove(e) {
 
 function createSmurf() {
   smurf = new Smurf();
-  scene.add(smurf.face);
+  scene.add(smurf.head);
 };
 
 Smurf = function() {
@@ -79,14 +79,14 @@ Smurf = function() {
   });
 
   this.leftEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
-  this.leftEye.position.x = 40;
-  this.leftEye.position.x = 120;
-  this.leftEye.position.x = 25;
+  this.leftEye.position.x = 38;
+  this.leftEye.position.y = 25;
+  this.leftEye.position.z = 140;
 
   this.rightEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
-  this.rightEye.position.x = -40;
-  this.rightEye.position.x = 120;
-  this.rightEye.position.x = 25;
+  this.rightEye.position.x = -38;
+  this.rightEye.position.y = 25;
+  this.rightEye.position.z = 140;
 
   // iris for eyes
   var irisGeometry = new THREE.BoxGeometry(4, 10, 10);
@@ -95,14 +95,14 @@ Smurf = function() {
   });
 
   this.leftIris = new THREE.Mesh(irisGeometry, irisMaterial);
-  this.leftIris.position.x = 42;
-  this.leftIris.position.x = 120;
-  this.leftIris.position.x = 25;
+  this.leftIris.position.x = 40;
+  this.leftIris.position.y = 25;
+  this.leftIris.position.z = 140;
 
   this.rightIris = new THREE.Mesh(irisGeometry, irisMaterial);
-  this.rightIris.position.x = -42;
-  this.rightIris.position.x = 120;
-  this.rightIris.position.x = 25;
+  this.rightIris.position.x = -40;
+  this.rightIris.position.y = 25;
+  this.rightIris.position.z = 140;
 
   this.head = new THREE.Group();
   this.head.add(this.face);
@@ -111,6 +111,15 @@ Smurf = function() {
   this.head.add(this.leftIris);
   this.head.add(this.rightIris);
   this.head.position.y = 60;
+
+  this.threegroup = new THREE.Group();
+  this.threegroup.add(this.head);
+  this.threegroup.traverse(function(object) {
+    if (object instanceof THREE.Mesh) {
+      object.castShadow = true;
+      object.receiveShadow = true;
+    }
+  });
 };
 
 Smurf.prototype.look = function(xTarget, yTarget) {
@@ -126,7 +135,8 @@ Smurf.prototype.look = function(xTarget, yTarget) {
 };
 
 Smurf.prototype.updateBody = function(speed) {
-  //wtf is speed?
+  // wtf is speed?
+  // debugger;
   smurf.head.rotation.x += (this.tHeadRotX - smurf.head.rotation.x) / speed;
   smurf.head.rotation.y += (this.tHeadRotY - smurf.head.rotation.y) / speed;
   smurf.head.position.x += (this.tHeadPosX - smurf.head.position.x) / speed;
