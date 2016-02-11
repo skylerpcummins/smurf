@@ -1,8 +1,6 @@
 var scene,
     camera,
     renderer,
-    geometry,
-    material,
     cube,
     windowHalfX,
     windowHalfY,
@@ -66,11 +64,53 @@ function createSmurf() {
 };
 
 Smurf = function() {
-  faceGeometry = new THREE.BoxGeometry(80, 80, 80);
-  material = new THREE.MeshLambertMaterial({
+  // make face
+  var faceGeometry = new THREE.BoxGeometry(80, 80, 80);
+  var faceMaterial = new THREE.MeshLambertMaterial({
     color: 22132217
   });
-  this.face = new THREE.Mesh(faceGeometry, material);
+  this.face = new THREE.Mesh(faceGeometry, faceMaterial);
+  this.face.position.z = 135;
+
+  // make eyes
+  var eyeGeometry = new THREE.BoxGeometry(5, 30, 30);
+  var eyeMaterial = new THREE.MeshLambertMaterial({
+    color: 0xffffff
+  });
+
+  this.leftEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
+  this.leftEye.position.x = 40;
+  this.leftEye.position.x = 120;
+  this.leftEye.position.x = 25;
+
+  this.rightEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
+  this.rightEye.position.x = -40;
+  this.rightEye.position.x = 120;
+  this.rightEye.position.x = 25;
+
+  // iris for eyes
+  var irisGeometry = new THREE.BoxGeometry(4, 10, 10);
+  var irisMaterial = new THREE.MeshLambertMaterial({
+    color: 0x302925
+  });
+
+  this.leftIris = new THREE.Mesh(irisGeometry, irisMaterial);
+  this.leftIris.position.x = 42;
+  this.leftIris.position.x = 120;
+  this.leftIris.position.x = 25;
+
+  this.rightIris = new THREE.Mesh(irisGeometry, irisMaterial);
+  this.rightIris.position.x = -42;
+  this.rightIris.position.x = 120;
+  this.rightIris.position.x = 25;
+
+  this.head = new THREE.Group();
+  this.head.add(this.face);
+  this.head.add(this.leftEye);
+  this.head.add(this.rightEye);
+  this.head.add(this.leftIris);
+  this.head.add(this.rightIris);
+  this.head.position.y = 60;
 };
 
 Smurf.prototype.look = function(xTarget, yTarget) {
@@ -87,11 +127,11 @@ Smurf.prototype.look = function(xTarget, yTarget) {
 
 Smurf.prototype.updateBody = function(speed) {
   //wtf is speed?
-  smurf.face.rotation.x += (this.tHeadRotX - smurf.face.rotation.x) / speed;
-  smurf.face.rotation.y += (this.tHeadRotY - smurf.face.rotation.y) / speed;
-  smurf.face.position.x += (this.tHeadPosX - smurf.face.position.x) / speed;
-  smurf.face.position.y += (this.tHeadPosY - smurf.face.position.y) / speed;
-  smurf.face.position.z += (this.tHeadPosZ - smurf.face.position.z) / speed;
+  smurf.head.rotation.x += (this.tHeadRotX - smurf.head.rotation.x) / speed;
+  smurf.head.rotation.y += (this.tHeadRotY - smurf.head.rotation.y) / speed;
+  smurf.head.position.x += (this.tHeadPosX - smurf.head.position.x) / speed;
+  smurf.head.position.y += (this.tHeadPosY - smurf.head.position.y) / speed;
+  smurf.head.position.z += (this.tHeadPosZ - smurf.head.position.z) / speed;
 };
 
 function rule3(v,vmin,vmax,tmin, tmax) {
